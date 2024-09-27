@@ -9,23 +9,22 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from 'vuex'
-
 import Product from '@/components/Product.vue';
+import { useStore } from 'vuex'
+import type { IProduct, TRoute } from '@/types/index.ts'
 
-const props = defineProps({
-  listType: {
-    type: String,
-    default: null
-  }
 
+const props = withDefaults(defineProps<{
+  listType: TRoute
+}>(), {
+  listType: null
 })
 
 const store = useStore()
 store.dispatch('getProductsFromApi')
-const productList = computed(() => store.getters.getProductList(props.listType))
+const productList = computed<IProduct[]>(() => store.getters.getProductList(props.listType))
 
 
 </script>

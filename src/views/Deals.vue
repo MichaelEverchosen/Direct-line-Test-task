@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Filters from '../components/Filters.vue';
 import ProductList from '@/components/ProductList.vue';
 

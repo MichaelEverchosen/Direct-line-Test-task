@@ -27,7 +27,7 @@
       <input
         type="text"
         class="filters__input"
-        @input="(event) => store.commit('setSearch', event.target.value)"
+        @input="test"
       >
       <div>
         <button class="filters__search">
@@ -41,15 +41,25 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
+import type { Ref } from 'vue'
 import { useStore } from 'vuex'
+import type { TList } from '@/types/index.ts'
+
 const store = useStore()
 
-const activeType = ref(null)
+const activeType: Ref<TList> = ref(null)
 
+interface InputEvent extends Event {
+  target: HTMLInputElement;
+}
 
-const activeFilter = (value) => {
+const test = (event: InputEvent) => {
+  store.commit('setSearch', event?.target?.value ?? '')
+}
+
+const activeFilter = (value: TList) => {
   store.commit('setProductType', value)
   activeType.value = value
 }

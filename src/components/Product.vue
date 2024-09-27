@@ -83,40 +83,19 @@
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import type { IProduct } from '@/types/index.ts'
 
 const store = useStore()
 const router = useRouter()
 
-interface IProduct {
-  id: number,
-  image: string,
-  type: string,
-  name: string,
-  city: string,
-  salesman: string,
-  parameter: string,
-  description: string,
-  price: number,
-  quanity: number,
-  pricePiece: number
-}
-
-interface Props {
+const props = defineProps<{
   data: IProduct,
-}
+}>()
 
-const props = defineProps<Props>()
-// const props = defineProps({
-//   data: {
-//     type: Object,
-//     default: () => ({})
-//   }
-// })
+const isDeal = computed<boolean>(() => store.getters.getDealStatus(props.data.id))
+const isFavorite = computed<boolean>(() => store.getters.getFavoriteStatus(props.data.id))
 
-const isDeal = computed(() => store.getters.getDealStatus(props.data.id))
-const isFavorite = computed(() => store.getters.getFavoriteStatus(props.data.id))
-
-const textDealButton = computed(() => {
+const textDealButton = computed<string>(() => {
   let text = ''
   if (isDeal.value) {
     text = 'Убрать из сделки'
@@ -125,11 +104,12 @@ const textDealButton = computed(() => {
   }
   return text
 })
+
 const textPayButton = ref('Оплатить')
 const pay = () => textPayButton.value = 'Оплачено'
 
-const addDeal = () => store.commit('toggleDeal', props.data.id)
-const addFavorite = () => store.commit('toggleFavorite', props.data.id)
+const addDeal = (): void => store.commit('toggleDeal', props.data.id)
+const addFavorite = (): void => store.commit('toggleFavorite', props.data.id)
 </script>
 
 <style lang="scss" scoped>
