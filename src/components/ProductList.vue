@@ -1,11 +1,10 @@
 <template>
   <div class="product-lists">
-    <div
+    <Product
       v-for="product in productList"
       :key="product.id"
-    >
-      <Product :data="product" />
-    </div>
+      :data="product"
+    />
   </div>
 </template>
 
@@ -14,7 +13,6 @@ import { computed } from 'vue'
 import Product from '@/components/Product.vue';
 import { useStore } from 'vuex'
 import type { IProduct, TRoute } from '@/types/index.ts'
-
 
 const props = withDefaults(defineProps<{
   listType: TRoute

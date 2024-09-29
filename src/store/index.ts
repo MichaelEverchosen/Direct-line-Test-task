@@ -16,7 +16,7 @@ export const store = createStore<IState>({
   },
   getters: {
     getProductList:
-      (state) =>
+      (state: IState) =>
       (listType: TRoute = null) => {
         let filteredProducts = [...state.products]
         if (state.filterSettings.search) {
@@ -25,8 +25,8 @@ export const store = createStore<IState>({
           )
         }
         if (state.filterSettings.productType) {
-          filteredProducts = filteredProducts.filter((product) =>
-            product.type.includes(state.filterSettings.productType)
+          filteredProducts = filteredProducts.filter(
+            (product) => product.type === state.filterSettings.productType
           )
         }
         if (listType) {
@@ -36,35 +36,35 @@ export const store = createStore<IState>({
         }
         return filteredProducts
       },
-    getDealStatus: (state) => (productId: number) => {
+    getDealStatus: (state: IState) => (productId: number) => {
       return !!state.deals.find((dealId) => dealId === productId)
     },
-    getFavoriteStatus: (state) => (productId: number) => {
+    getFavoriteStatus: (state: IState) => (productId: number) => {
       return !!state.favorites.find((favoriteId) => favoriteId === productId)
     }
   },
   mutations: {
-    setProductList: (state, products: IProduct[]) => {
+    setProductList: (state: IState, products: IProduct[]) => {
       state.products = products
     },
-    toggleDeal: (state, productId: number) => {
-      if (state.deals.includes(productId) === false) {
+    toggleDeal: (state: IState, productId: number) => {
+      if (!state.deals.includes(productId)) {
         state.deals.push(productId)
-      } else {
-        state.deals = state.deals.filter((dealId) => dealId !== productId)
+        return
       }
+      state.deals = state.deals.filter((dealId) => dealId !== productId)
     },
-    toggleFavorite: (state, productId: number) => {
+    toggleFavorite: (state: IState, productId: number) => {
       if (state.favorites.includes(productId) === false) {
         state.favorites.push(productId)
-      } else {
-        state.favorites = state.favorites.filter((favoriteId) => favoriteId !== productId)
+        return
       }
+      state.favorites = state.favorites.filter((favoriteId) => favoriteId !== productId)
     },
-    setSearch: (state, value: string) => {
+    setSearch: (state: IState, value: string) => {
       state.filterSettings.search = value
     },
-    setProductType: (state, value: TList) => {
+    setProductType: (state: IState, value: TList) => {
       state.filterSettings.productType = value
     }
   },

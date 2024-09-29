@@ -1,7 +1,7 @@
 <template>
   <div>
     <Filters></Filters>
-    <ProductList></ProductList>
+    <ProductList :listType="null"></ProductList>
   </div>
 </template>
 

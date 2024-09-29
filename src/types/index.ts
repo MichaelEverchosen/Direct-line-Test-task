@@ -14,7 +14,7 @@ export interface IProduct {
 
 export interface IFilterSettings {
   search: string
-  productType: null | string
+  productType: TList
 }
 
 export interface IState {

@@ -27,7 +27,7 @@
       <input
         type="text"
         class="filters__input"
-        @input="test"
+        @input="setSearch"
       >
       <div>
         <button class="filters__search">
@@ -55,7 +55,7 @@ interface InputEvent extends Event {
   target: HTMLInputElement;
 }
 
-const test = (event: InputEvent) => {
+const setSearch = (event: InputEvent) => {
   store.commit('setSearch', event?.target?.value ?? '')
 }
 
@@ -79,7 +79,6 @@ const activeFilter = (value: TList) => {
     gap: 10px;
   }
 
-
   &__group {
     font-size: 15px;
     font-weight: 400;
@@ -96,8 +95,6 @@ const activeFilter = (value: TList) => {
       color: #2D3B87;
     }
   }
-
-
 
   &__poisk {
     display: flex;

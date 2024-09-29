@@ -96,13 +96,7 @@ const isDeal = computed<boolean>(() => store.getters.getDealStatus(props.data.id
 const isFavorite = computed<boolean>(() => store.getters.getFavoriteStatus(props.data.id))
 
 const textDealButton = computed<string>(() => {
-  let text = ''
-  if (isDeal.value) {
-    text = 'Убрать из сделки'
-  } else {
-    text = 'Добавить в сделки'
-  }
-  return text
+  return isDeal.value ? 'Убрать из сделки' : 'Добавить в сделки'
 })
 
 const textPayButton = ref('Оплатить')
